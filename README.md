@@ -29,6 +29,11 @@ Uma pasta .venv foi criada no diretório raiz.
 source .venv/bin/activate
 ```
 
+Para instalar as depedências dentro do seu .venv utilize:
+```bash
+pip install -r requirements.txt
+```
+
 Agora inicie o projeto com:
 ```bash
 streamlit run index.py
