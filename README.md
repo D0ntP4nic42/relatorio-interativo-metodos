@@ -28,3 +28,8 @@ Uma pasta .venv foi criada no diretório raiz.
 # macOS and Linux
 source .venv/bin/activate
 ```
+
+Agora inicie o projeto com:
+```bash
+streamlit run index.py
+```
