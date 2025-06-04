@@ -42,7 +42,6 @@ st.write("### Utilizando a função: ")
 with st.echo():
     import calcularMatriz as cm
     determinante = cm.expansaoCofatores(matriz.values)
-    st.write("O determinante da matriz é: ", determinante)
 
 source_code = inspect.getsource(cm.expansaoCofatores)
 st.write("Código fonte da calculadora de determinante de matriz:")
