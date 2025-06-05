@@ -1,6 +1,7 @@
 import streamlit as st
 import calcularMatriz as cm
 import analiseDeVibracaoLisas as avl
+import analiseDeVibracaoRugosas as avr
 import pandas as pd
 import inspect
 
