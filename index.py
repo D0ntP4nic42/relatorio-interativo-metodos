@@ -11,7 +11,9 @@ st.write("## Biblioteca de códigos:")
 st.write("A ideia do projeto é criar uma biblioteca de códigos em Python para Métodos Numéricos. A biblioteca será construída ao longo do projeto com diversos códigos. A seguir, temos a lista de códigos disponíveis:")
 st.markdown("""
 1. [Calculadora de Determinante de Matriz (Cofator)](#calculadora-de-determinante-de-matriz-cofator)
-2. [Análise de vibração (Métodos Numéricos para Engenharia, Quinta Edição p. 170)](#6297aac5)
+2. [Análise de vibração (Métodos Numéricos para Engenharia, Quinta Edição p. 170)](#6297aac5)  
+    2.1 [Etapa 1: Aplicando em estradas lisas, achando a constante da mola](#etapa-1-aplicando-em-estradas-lisas-achando-a-constante-da-mola)  
+    2.2 [Etapa 2: Aplicando em estradas rugosas](#etapa-2-aplicando-em-estradas-rugosas)
 """, unsafe_allow_html=True)
 
 st.write("## Calculadora de determinante de matriz (Cofator)")
@@ -101,3 +103,39 @@ st.pyplot(avl.getGraph())
 st.pyplot(avl.getGraphEvoK())
 st.write("""Ao observar os gráficos podemos notar como o método na bissetriz auxiliou na resolução do problema. 
          Conseguimos ver que o próximo resultado sempre está entre os dois últimos""")
+
+st.write("### Etapa 2: Aplicando em estradas rugosas")
+st.write("A segunda parte da análise de vibração considera que o veículo está passando por estradas rugosas.")
+st.write("Nessa situação, usamos uma equação diferente, levando em conta a frequência de excitação provocada pelas irregularidades da pista.")
+
+st.write("### Equação utilizada:")
+st.latex(r"""
+f(\omega_p) = 2 \cdot \sqrt{(1 - \omega_p^2)^2 + 4 \cdot \zeta^2 \cdot \omega_p^2} - 1
+""")
+
+st.markdown(r"""
+Onde:  
+- $\omega_p = \frac{\omega}{\omega_n}$ é a razão entre a frequência de excitação $\omega$ e a frequência natural $\omega_n$.  
+- $\zeta = \frac{c}{2 \sqrt{k \cdot m}}$ é o fator de amortecimento crítico.  
+- A equação foi igualada a 1 com base nas condições do estudo de caso.  
+
+Utilizamos novamente o **método da bisseção** para encontrar o valor de $\omega_p$ que zera essa equação.
+""", unsafe_allow_html=True)
+
+
+source_code = inspect.getsource(avr)
+st.write("Código fonte da análise de vibração em estradas rugosas:")
+st.code(source_code, language="python")
+
+st.write("#### Tabela de iterações do método da bisseção:")
+st.dataframe(avr.dataFrame, hide_index=True)
+
+st.markdown("#### Gráfico da função $f(\\omega_p)$:", unsafe_allow_html=True)
+st.pyplot(avr.getGraph())
+
+st.markdown("#### Evolução do valor de $\\omega_p$ ao longo das iterações:", unsafe_allow_html=True)
+st.pyplot(avr.getGraphEvoK())
+
+st.markdown(r"""
+Observando os gráficos, podemos ver o comportamento da função $f(\omega_p)$ e como o método da bisseção vai refinando o valor de $\omega_p$ até atingir a condição de equilíbrio (valor próximo de zero).
+""", unsafe_allow_html=True)
