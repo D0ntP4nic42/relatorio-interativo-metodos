@@ -4,12 +4,14 @@ import matplotlib.pyplot as plt
 
 m = 1.2 * (10**6)
 c = 1 * (10**7)
-k_final = 1.5380859375e9 
+k_final = 1.397000e+09
 
 fatorDeAmortecimento = c / (2 * math.sqrt(k_final * m))
 
 def getResultOmegaP(omegaP):
-    return 2 * math.sqrt((1 - omegaP**2)**2 + 4 * (fatorDeAmortecimento**2) * (omegaP**2)) - 1
+    parte1 = (1 - omegaP**2)**2
+    parte2 = 4 * (fatorDeAmortecimento**2) * (omegaP**2)
+    return 2 * math.sqrt(parte1 +  parte2) - 1
 
 omegaP1 = 0
 omegaP2 = 1
@@ -64,10 +66,45 @@ def getGraphEvoK():
     plt.figure(figsize=(8, 5))
     plt.plot(range(len(listOmegaP)), listOmegaP, marker='o', linestyle='-', color='green', label='Valor de ωp')
     plt.xlabel("Iteração")
-    plt.ylabel("ωp")
+    plt.ylabel("ωp ()")
     plt.title("Evolução de ωp no Método da Bisseção")
     plt.grid()
     plt.legend()
     return plt
 
+def getGraphXt():
+    import numpy as np
 
+    omega_n = math.sqrt(k_final / m)
+    zeta = fatorDeAmortecimento
+    lambda_ = zeta * omega_n
+    mu = omega_n * math.sqrt(1 - zeta**2)
+
+    t = np.linspace(0, 1, 400)
+
+    # Condições iniciais
+    x0 = 1
+    v0 = 0
+
+    # Sistema de equações para A e B com base nas condições iniciais:
+    # x(0) = A
+    # x'(0) = -lambda*A + mu*B
+    A = x0
+    B = (v0 + lambda_ * A) / mu
+
+    # Função x(t)
+    x_t = np.exp(-lambda_ * t) * (A * np.cos(mu * t) + B * np.sin(mu * t))
+
+    # Plotagem
+    plt.figure(figsize=(8, 5))
+    plt.plot(t, x_t, label='x(t)')
+    plt.axvline(0.05, color='red', linestyle='--', label='t = 0.05s')
+    plt.xlabel("Tempo (s)")
+    plt.ylabel("Deslocamento x(t) (m)")
+    plt.title("Deslocamento x(t) em Estradas Rugosas")
+    plt.grid()
+    plt.legend()
+    return plt
+
+
+getGraphXt().show()

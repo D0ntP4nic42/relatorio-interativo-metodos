@@ -1,7 +1,7 @@
 import math as math
 import pandas as pd
 import matplotlib.pyplot as plt
-
+import numpy as np
 
 def getResult(k):
     return math.cos(0.05 * math.sqrt((k/m) - c**2/(4*m**2))) + c/(math.sqrt(4*k * m - c**2)) * math.sin(0.05 * math.sqrt(k/m - c**2/(4*m**2)))
@@ -10,8 +10,8 @@ def getGraph():
     plt.figure(figsize=(8, 5))
     plt.plot(range(len(listK)), listResult, marker='o', linestyle='-', label='Resultado da equação')
     plt.axhline(0, color='black', linestyle='--', linewidth=0.8, label='Equilíbrio')
-    plt.xlabel('Iteração')
-    plt.ylabel('Resultado')
+    plt.xlabel('iteração')
+    plt.ylabel('Resultado (m)')
     plt.title('Convergência do Método da Bisseção')
     plt.legend()
     plt.grid()
@@ -19,11 +19,11 @@ def getGraph():
 
 def getGraphEvoK():
     plt.figure(figsize=(8, 5))
-    plt.plot(range(len(listK)), listK, marker='o', linestyle='-', color='red', label='Valor de K')
+    plt.plot(range(len(listK)), listK, marker='o', linestyle='-', color='red', label='Valor de k')
 
     plt.xlabel('Iteração')
-    plt.ylabel('Valor de K')
-    plt.title('Evolução do Valor de K no Método da Bisseção')
+    plt.ylabel('Valor de k (g / s²)')
+    plt.title('Evolução do Valor de k no Método da Bisseção')
     plt.grid()
     plt.legend()
     return plt
@@ -54,4 +54,5 @@ for i in range (0, 13):
         print("Resultado encontrado!")
         break
 
-dataFrame = pd.DataFrame({'K1': listK1, 'K2': listK2, 'K': listK, 'Resultado': listResult})
+    dataframe = pd.DataFrame({'K1': listK1, 'K2': listK2, 'K': listK, 'Resultado': listResult})
+    
