@@ -1,5 +1,6 @@
 import math
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 
 m = 1.2 * (10**6)
@@ -46,8 +47,6 @@ dataFrame = pd.DataFrame({
 })
 
 def getGraph():
-    import numpy as np
-
     omega_range = np.linspace(0, 1, 500)
     values = [getResultOmegaP(w) for w in omega_range]
 
@@ -66,7 +65,7 @@ def getGraphEvoK():
     plt.figure(figsize=(8, 5))
     plt.plot(range(len(listOmegaP)), listOmegaP, marker='o', linestyle='-', color='green', label='Valor de ωp')
     plt.xlabel("Iteração")
-    plt.ylabel("ωp ()")
+    plt.ylabel("ωp")
     plt.title("Evolução de ωp no Método da Bisseção")
     plt.grid()
     plt.legend()

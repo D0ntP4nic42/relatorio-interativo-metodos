@@ -1,7 +1,6 @@
 import math as math
 import pandas as pd
 import matplotlib.pyplot as plt
-import numpy as np
 
 def getResult(k):
     return math.cos(0.05 * math.sqrt((k/m) - c**2/(4*m**2))) + c/(math.sqrt(4*k * m - c**2)) * math.sin(0.05 * math.sqrt(k/m - c**2/(4*m**2)))
