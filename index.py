@@ -11,8 +11,8 @@ st.write("## Biblioteca de códigos:")
 st.write("A ideia do projeto é criar uma biblioteca de códigos em Python para Métodos Numéricos. A biblioteca será construída ao longo do projeto com diversos códigos. A seguir, temos a lista de códigos disponíveis:")
 
 pagina = st.sidebar.selectbox("Escolha a página", [
-    "Calculadora de Determinante de Matriz (Cofator)",
     "Análise de Vibração",
+    "Calculadora de Determinante de Matriz (Cofator)",
     "Expansão de Taylor",
     "Análise do Paraquedista"
 ])
