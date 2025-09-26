@@ -1,57 +1,58 @@
 import math as math
 import pandas as pd
 import matplotlib.pyplot as plt
+from utils import metodos
 
-def getResult(k):
-    return math.cos(0.05 * math.sqrt((k/m) - c**2/(4*m**2))) + c/(math.sqrt(4*k * m - c**2)) * math.sin(0.05 * math.sqrt(k/m - c**2/(4*m**2)))
+class AnaliseDeVibracaoLisas:
+    def __init__(self, k1=1e9, k2=2e9, metodo="Bisseção"):
+        self.k1 = k1
+        self.k2 = k2
+        self.metodo = metodo
+        self.resultadoRaiz = None
+        self.dataframe = None
 
-def getGraph():
-    plt.figure(figsize=(8, 5))
-    plt.plot(range(len(listK)), listResult, marker='o', linestyle='-', label='Resultado da equação')
-    plt.axhline(0, color='black', linestyle='--', linewidth=0.8, label='Equilíbrio')
-    plt.xlabel('iteração')
-    plt.ylabel('Resultado (m)')
-    plt.title('Convergência do Método da Bisseção')
-    plt.legend()
-    plt.grid()
-    return plt
+    def getResult(self, k):
+        m = 1.2e6
+        c = 1e7
+        return math.cos(0.05 * math.sqrt((k/m) - c**2/(4*m**2))) + \
+               c/(math.sqrt(4*k*m - c**2)) * math.sin(0.05 * math.sqrt(k/m - c**2/(4*m**2)))
 
-def getGraphEvoK():
-    plt.figure(figsize=(8, 5))
-    plt.plot(range(len(listK)), listK, marker='o', linestyle='-', color='red', label='Valor de k')
+    def calcular(self):
+        if self.metodo == "Bisseção":
+            self.resultadoRaiz = metodos.bissecao(self.getResult, self.k1, self.k2)
+        elif self.metodo == "Falsa Posição":
+            self.resultadoRaiz = metodos.falsa_posicao(self.getResult, self.k1, self.k2)
+        else:
+            raise ValueError(f"Método desconhecido: {self.metodo}")
 
-    plt.xlabel('Iteração')
-    plt.ylabel('Valor de k (g / s²)')
-    plt.title('Evolução do Valor de k no Método da Bisseção')
-    plt.grid()
-    plt.legend()
-    return plt
+        self.dataframe = pd.DataFrame({
+            'K1': self.resultadoRaiz["listA"],
+            'K2': self.resultadoRaiz["listB"],
+            'K': self.resultadoRaiz["listX"],
+            'Resultado': self.resultadoRaiz["listResult"]
+        })
 
-m = 1.2 * (10**6)
-c = 1 * (10**7)
-k1 = 1 * 10**9 
-k2 = 2 * 10**9
+    def getGraph(self):
+        plt.figure(figsize=(8, 5))
+        plt.plot(range(len(self.resultadoRaiz["listX"])),
+                 self.resultadoRaiz["listResult"],
+                 marker='o', linestyle='-', label='Resultado da equação')
+        plt.axhline(0, color='black', linestyle='--', linewidth=0.8, label='Equilíbrio')
+        plt.xlabel('Iteração')
+        plt.ylabel('Resultado (m)')
+        plt.title('Convergência do valor de M')
+        plt.legend()
+        plt.grid()
+        return plt.gcf()
 
-listK1 = []
-listK2 = []
-listK = []
-listResult = []
-
-for i in range (0, 13):
-    k = (k1 + k2)/2
-    result = getResult(k)
-    listK1.append(k1)
-    listK2.append(k2)
-    listK.append(k)
-    listResult.append(result)
-
-    if result < 0:
-        k2 = k
-    elif result > 0:
-        k1 = k
-    else:
-        print("Resultado encontrado!")
-        break
-
-    dataframe = pd.DataFrame({'K1': listK1, 'K2': listK2, 'K': listK, 'Resultado': listResult})
-    
+    def getGraphEvoK(self):
+        plt.figure(figsize=(8, 5))
+        plt.plot(range(len(self.resultadoRaiz["listX"])),
+                 self.resultadoRaiz["listX"],
+                 marker='o', linestyle='-', color='red', label='Valor de k')
+        plt.xlabel('Iteração')
+        plt.ylabel('Valor de k (g / s²)')
+        plt.title('Evolução do Valor de k por Iteração')
+        plt.grid()
+        plt.legend()
+        return plt.gcf()

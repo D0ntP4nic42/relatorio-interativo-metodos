@@ -47,7 +47,7 @@ dataFrame = pd.DataFrame({
 })
 
 def getGraph():
-    omega_range = np.linspace(0, 1, 500)
+    omega_range = np.linspace(0, 2, 500)
     values = [getResultOmegaP(w) for w in omega_range]
 
     plt.figure(figsize=(8, 5))
@@ -71,7 +71,7 @@ def getGraphEvoK():
     plt.legend()
     return plt
 
-def getGraphXt():
+def getGraphXt(posicaoInicial=0.5):
     import numpy as np
 
     omega_n = math.sqrt(k_final / m)
@@ -82,19 +82,14 @@ def getGraphXt():
     t = np.linspace(0, 1, 400)
 
     # Condições iniciais
-    x0 = 1
+    x0 = posicaoInicial
     v0 = 0
 
-    # Sistema de equações para A e B com base nas condições iniciais:
-    # x(0) = A
-    # x'(0) = -lambda*A + mu*B
     A = x0
     B = (v0 + lambda_ * A) / mu
 
-    # Função x(t)
     x_t = np.exp(-lambda_ * t) * (A * np.cos(mu * t) + B * np.sin(mu * t))
 
-    # Plotagem
     plt.figure(figsize=(8, 5))
     plt.plot(t, x_t, label='x(t)')
     plt.axvline(0.05, color='red', linestyle='--', label='t = 0.05s')
