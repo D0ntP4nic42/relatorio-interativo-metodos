@@ -46,7 +46,7 @@ dataFrame = pd.DataFrame({
     'Resultado': listResultOmegaP
 })
 
-def getGraph():
+def getGrafico():
     omega_range = np.linspace(0, 2, 500)
     values = [getResultOmegaP(w) for w in omega_range]
 
@@ -61,7 +61,7 @@ def getGraph():
     plt.legend()
     return plt
 
-def getGraphEvoK():
+def getGraficoEvoK():
     plt.figure(figsize=(8, 5))
     plt.plot(range(len(listOmegaP)), listOmegaP, marker='o', linestyle='-', color='green', label='Valor de ωp')
     plt.xlabel("Iteração")
@@ -71,7 +71,7 @@ def getGraphEvoK():
     plt.legend()
     return plt
 
-def getGraphXt(posicaoInicial=0.5):
+def getGraficoXt(posicaoInicial=0.5):
     import numpy as np
 
     omega_n = math.sqrt(k_final / m)
@@ -101,4 +101,4 @@ def getGraphXt(posicaoInicial=0.5):
     return plt
 
 
-getGraphXt().show()
+getGraficoXt().show()

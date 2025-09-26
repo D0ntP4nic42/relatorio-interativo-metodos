@@ -11,12 +11,6 @@ class AnaliseDeVibracaoLisas:
         self.resultadoRaiz = None
         self.dataframe = None
 
-    def getResult(self, k):
-        m = 1.2e6
-        c = 1e7
-        return math.cos(0.05 * math.sqrt((k/m) - c**2/(4*m**2))) + \
-               c/(math.sqrt(4*k*m - c**2)) * math.sin(0.05 * math.sqrt(k/m - c**2/(4*m**2)))
-
     def calcular(self):
         if self.metodo == "Bisseção":
             self.resultadoRaiz = metodos.bissecao(self.getResult, self.k1, self.k2)
@@ -31,8 +25,14 @@ class AnaliseDeVibracaoLisas:
             'K': self.resultadoRaiz["listX"],
             'Resultado': self.resultadoRaiz["listResult"]
         })
+        
+    def getResult(self, k):
+        m = 1.2e6
+        c = 1e7
+        return math.cos(0.05 * math.sqrt((k/m) - c**2/(4*m**2))) + \
+               c/(math.sqrt(4*k*m - c**2)) * math.sin(0.05 * math.sqrt(k/m - c**2/(4*m**2)))
 
-    def getGraph(self):
+    def getGrafico(self):
         plt.figure(figsize=(8, 5))
         plt.plot(range(len(self.resultadoRaiz["listX"])),
                  self.resultadoRaiz["listResult"],
@@ -45,7 +45,7 @@ class AnaliseDeVibracaoLisas:
         plt.grid()
         return plt.gcf()
 
-    def getGraphEvoK(self):
+    def getGraficoEvoK(self):
         plt.figure(figsize=(8, 5))
         plt.plot(range(len(self.resultadoRaiz["listX"])),
                  self.resultadoRaiz["listX"],

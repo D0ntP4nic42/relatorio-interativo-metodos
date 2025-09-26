@@ -76,8 +76,8 @@ def mostrar():
 
             O código calcula o resultado para esse **\( k \)** e substitui o **\( k _1\)** ou **\( k _2\)** de acordo com o resultado. Dessa forma, podemos aproximar um valor de **\( k \)** que zere a equação.
         """)
-        st.pyplot(avl.getGraph())
-        st.pyplot(avl.getGraphEvoK())
+        st.pyplot(avl.getGrafico())
+        st.pyplot(avl.getGraficoEvoK())
         st.write("""Ao observar os gráficos podemos notar como o método na bissetriz auxiliou na resolução do problema. 
                 Conseguimos ver que o próximo resultado sempre está entre os dois últimos""")
         st.write("#### Código fonte do método da bisseção utilizado:")
@@ -112,8 +112,8 @@ def mostrar():
             O código calcula o resultado para esse **\( k \)** e substitui o **\( k _1\)** ou **\( k _2\)** de acordo com o resultado. Dessa forma, podemos aproximar um valor de **\( k \)** que zere a equação.
         """)
 
-        st.pyplot(avl.getGraph())
-        st.pyplot(avl.getGraphEvoK())
+        st.pyplot(avl.getGrafico())
+        st.pyplot(avl.getGraficoEvoK())
         st.write("Ao observar os gráficos podemos notar como o método da falsa posição auxiliou na resolução do problema.")
         st.write("#### Código fonte do método da falsa posição utilizado:")
         source_code = inspect.getsource(metodos.falsa_posicao)
@@ -134,7 +134,7 @@ def mostrar():
         file_name=f"k_por_iteracao_{metodo.lower()}.csv",
         mime='text/csv'
     )
-    st.write(f"Observe que na tabela conseguimos ver os valores de **\( k _1\)**, **\( k _2\)**, **\( k \)** e o resultado da equação para cada iteração do método da bisseção.")
+    st.write(f"Observe que na tabela conseguimos ver os valores de **\( k _1\)**, **\( k _2\)**, **\( k \)** e o resultado da equação para cada iteração do método numérico utilizado.")
 
     st.write("### Etapa 2: Aplicando em estradas rugosas")
     st.write("A segunda parte da análise de vibração considera que o veículo está passando por estradas rugosas.")
@@ -150,7 +150,7 @@ def mostrar():
     - $\omega_p = \frac{\omega}{\omega_n}$ é a razão entre a frequência de excitação $\omega$ e a frequência natural $\omega_n$.  
     - $\zeta = \frac{c}{2 \sqrt{k \cdot m}}$ é o fator de amortecimento crítico.    
 
-    Utilizamos novamente o **método da bisseção** para encontrar o valor de $\omega_p$ que zera essa equação, observe que para acharmos $\zeta precisamos do **\(k\)**.
+    Utilizamos o **método da bisseção** para encontrar o valor de $\omega_p$ que zera essa equação, observe que para acharmos $\zeta precisamos do **\(k\)**.
     """, unsafe_allow_html=True)
 
     st.write("Código fonte da análise de vibração em estradas rugosas:")
@@ -175,10 +175,10 @@ def mostrar():
     )
 
     st.markdown("#### Gráfico da função $f(\\omega_p)$:", unsafe_allow_html=True)
-    st.pyplot(avr.getGraph())
+    st.pyplot(avr.getGrafico())
 
     st.markdown("#### Evolução do valor de $\\omega_p$ ao longo das iterações:", unsafe_allow_html=True)
-    st.pyplot(avr.getGraphEvoK())
+    st.pyplot(avr.getGraficoEvoK())
 
     st.markdown(r"""
     Observando os gráficos, podemos ver o comportamento da função $f(\omega_p)$ e como o método da bisseção vai refinando o valor de $\omega_p$ até atingir a condição de equilíbrio (valor próximo de zero) assim como vimos ocorrer na primeira etapa.
@@ -186,7 +186,7 @@ def mostrar():
 
     st.write("#### Gráfico da posição do carro ao longo do tempo:")
     posicao_inicial = st.slider("Posição inicial do carro (em metros)", min_value=0.0, max_value=1.0, value=0.5, step=0.1, key="posicao_inicial")
-    st.pyplot(avr.getGraphXt(posicaoInicial=posicao_inicial))
+    st.pyplot(avr.getGraficoXt(posicaoInicial=posicao_inicial))
     st.write("""Após acharmos o valor de $\omega_p$ e **\(k\)**, podemos calcular a posição do carro ao longo do tempo utilizando a equação da posição da mola em relação ao tempo, considerando o amortecimento e a frequência de excitação.
             Observe que o ponto em que o sistema entra em equilíbrio pela primeira vez é em t = 0.05 assim como solicitado. Observe também que o gráfico corresponde muito bem ao esperado de um sistema subamortecido, onde a posição do carro oscila em torno de um valor de equilíbrio antes de se estabilizar.""")
     
